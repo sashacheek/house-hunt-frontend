@@ -3,18 +3,20 @@ import { Link } from "react-router-dom";
 
 function YourListings() {
     return (
-        <div id="your-listings">
+        <>
             <Navigation />
-            <h1>Your Listings</h1>
-            <div className="listings">
-                <Link to="/">
-                    <div>
-                        <p>+</p>
-                        <p>ADD NEW</p>
-                    </div>
-                </Link>
+            <div id="your-listings">
+                <h1>Your Listings</h1>
+                <div className="listings">
+                    <Link to="/newlisting">
+                        <div>
+                            <p>+</p>
+                            <p>ADD NEW</p>
+                        </div>
+                    </Link>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 

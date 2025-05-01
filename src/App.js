@@ -1,11 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
-import Login from './pages/Login.jsx'
-import { useEffect, useState } from 'react'
-import Home from './pages/Home.jsx'
+import Login from './pages/Login.jsx';
+import Home from './pages/Home.jsx';
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import YourListings from './pages/YourListings.jsx';
+import AddListing from './pages/AddListing.jsx';
 
 function App() {
   return (
@@ -14,6 +13,7 @@ function App() {
         <Route path="/" element={<Home />}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/yourlistings" element={<YourListings />}/>
+        <Route path="/newlisting" element={<AddListing />}/>
       </Routes>
     </BrowserRouter>
   )

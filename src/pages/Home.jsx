@@ -2,6 +2,7 @@ import logo from '../logo.svg';
 import '../App.css';
 import { useEffect, useState } from 'react'
 import Navigation from '../components/Navigation'
+import Card from "../components/Card"
 
 function Home() {
 
@@ -24,7 +25,11 @@ function Home() {
             </div>
         </div>
       </header>
+      <div className="cards">
+      <Card />
+      </div>
       <ul>
+  
       {addresses.map(address => (
   <li key={address.id}>{address.street} 
   {address.city}</li>

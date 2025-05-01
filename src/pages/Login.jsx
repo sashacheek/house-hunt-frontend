@@ -18,7 +18,7 @@ function Login() {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ session: { email, password } })  // Wrap in session
+        body: JSON.stringify({ session: { email, password } })
       });
   
       if (!response.ok) {
@@ -27,11 +27,9 @@ function Login() {
   
       const data = await response.json();
   
-      // Save token in localStorage
       localStorage.setItem("auth_token", data.auth_token);
       localStorage.setItem("email", data.email);
   
-      // Optional: Redirect or show success
       navigate("/");
     } catch (err) {
       setError("Invalid email or password");

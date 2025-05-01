@@ -13,13 +13,13 @@ function Login({ onLogin }) {
       headers: {
         'Content-Type': 'application/json',
       },
-      credentials: 'include', // IMPORTANT: allows cookies/session
+      credentials: 'include',
       body: JSON.stringify({ email, password }),
     });
 
     if (res.ok) {
       const user = await res.json();
-      onLogin(user); // pass user data up
+      onLogin(user);
     } else {
       const err = await res.json();
       setError(err.error || 'Login failed');
