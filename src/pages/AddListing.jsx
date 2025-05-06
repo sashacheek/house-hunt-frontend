@@ -11,7 +11,7 @@ function AddListing() {
         e.preventDefault();
 
         const authToken = localStorage.getItem("auth_token");
-        const response = await fetch(`${process.env.BACKEND_URL}/api/listings`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/listings`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
