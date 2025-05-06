@@ -8,7 +8,7 @@ function Home() {
 
   const [addresses, setAddresses] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:4000/api/addresses')
+    fetch(`${process.env.BACKEND_URL}/api/addresses`)
       .then(response => response.json())
       .then(data => setAddresses(data))
       .catch(error => console.error('Error fetching addresses:', error));
