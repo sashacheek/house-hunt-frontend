@@ -141,9 +141,9 @@ label {
 }
 
 
-/* login */
+/* login and Sign Up */
 
-#login {
+.login-signup {
   width: 400px;
   margin: 100px auto;
   border: 1px solid rgb(0, 183, 140);
@@ -151,31 +151,31 @@ label {
   padding: 30px;
 }
 
-#login h1 {
+.login-signup h1 {
   color: rgb(78, 78, 78);
   font-weight: 500;
   font-size: 28px;
 }
 
-#login img {
+.login-signup img {
   display: block;
   margin: 0 auto;
   width: 40px;
 }
 
-#login form {
+.login-signup form {
   display: flex;
   flex-direction: column;
   row-gap: 30px;
 }
 
-#login form div {
+.login-signup form div {
   display:  flex;
   flex-direction: column;
   row-gap: 10px;
 }
 
-#login form p {
+.login-signup form p {
   text-align: center;
 }
 

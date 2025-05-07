@@ -25,12 +25,15 @@ function Navigation() {
 
             {isLoggedIn ? (
                 <>
-                    <Link to="/yourlistings">Your Listings</Link>
-                    <Link onClick={handleLogout} to="/">Logout</Link>
-                    <Link to="/">Hi, {email}</Link>
+                  <Link to="/yourlistings">Your Listings</Link>
+                  <Link onClick={handleLogout} to="/">Logout</Link>
+                  <Link to="/">Hi, {email}</Link>
                 </>
             ) : (
-                    <Link to="/login">Login</Link>
+                <>
+                  <Link to="/login">Login</Link>
+                  <Link to="/signup">Sign Up</Link>
+                </>
             )}
         </nav>
     )
