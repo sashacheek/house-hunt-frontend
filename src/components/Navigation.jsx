@@ -17,6 +17,7 @@ function Navigation() {
 
     return (
         <nav id="navigation">
+        <Link to="/">HouseHunt</Link>
             <form>
                 <input placeholder="Enter City, State, or Zip Code"></input>
                 {/* <button type="submit">S</button> */}

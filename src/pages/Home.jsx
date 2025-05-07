@@ -2,7 +2,7 @@ import logo from '../logo.svg';
 import '../App.css';
 import { useEffect, useState } from 'react'
 import Navigation from '../components/Navigation'
-import Card from "../components/Card"
+import Cards from "../components/Cards"
 
 function Home() {
 
@@ -35,9 +35,7 @@ function Home() {
             </div>
         </div>
       </header>
-      <div className="cards">
-      <Card />
-      </div>
+      <Cards />
       <ul>
   
       {addresses.map(address => (

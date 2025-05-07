@@ -3,9 +3,15 @@ function Card() {
     return (
         <div className="card">
             <img src={placeholder}></img>
-            <h2>$123,456</h2>
-            <h3>bd: 4 ba: 2.5 sqft: 1000</h3>
-            <h4>456 Bell St, Townsville, WY</h4>
+            <div className="content">
+                <p className="cost">$123,456</p>
+                <div className="info">
+                    <p>bd: 4</p>
+                    <p>ba: 2.5</p>
+                    <p>sqft: 1500</p>
+                </div>
+                <p className="address">456 Bell St, Townsville, WY</p>
+            </div>
         </div>
     )
 }
