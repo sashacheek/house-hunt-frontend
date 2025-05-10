@@ -1,27 +1,10 @@
-import logo from '../logo.svg';
 import '../App.css';
-import { useEffect, useState } from 'react'
 import Navigation from '../components/Navigation'
 import Cards from "../components/Cards"
 
 function Home() {
 
-  const [addresses, setAddresses] = useState([]);
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/addresses`, {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => {
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return response.json();
-      })
-      .then(data => setAddresses(data))
-      .catch(error => console.error('Error fetching addresses:', error));
-  }, []);
+
   
   return (
     <div className="App">
@@ -36,13 +19,6 @@ function Home() {
         </div>
       </header>
       <Cards />
-      <ul>
-  
-      {addresses.map(address => (
-  <li key={address.id}>{address.street} 
-  {address.city}</li>
-))}
-      </ul>
     </div>
   );
 }

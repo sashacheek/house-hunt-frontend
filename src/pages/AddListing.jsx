@@ -35,9 +35,9 @@ function AddListing() {
         setDisplayCover(newDisplayCover);
     }
 
-    const compressImages = async () => {
+    const compressImages = async (imgs) => {
         var compressedImages = [];
-        for (var image of images) {
+        for (var image of imgs) {
             const options = {
             maxSizeMB: 0.5,
             maxWidthOrHeight: 1024,
@@ -57,34 +57,33 @@ function AddListing() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const compressed = await compressImages();
-        setImages(compressed);
+        const compressed = await compressImages(images);
+        const coverList = await compressImages([coverImage]);
+        const compressedCover = coverList[0];
+        const formData = new FormData();
+
+        formData.append("listing[type]", parseInt(type));
+        formData.append("listing[bedrooms]", parseInt(bedrooms));
+        formData.append("listing[bathrooms]", parseInt(bathrooms));
+        formData.append("listing[square_ft]", parseFloat(sqft));
+        formData.append("listing[description]", description);
+
+        formData.append("address[street]", street);
+        formData.append("address[city]", city);
+        formData.append("address[state]", state);
+
+        formData.append("images[main]", compressedCover);
+        compressed.forEach((img, idx) => {
+            formData.append(`images[all][]`, img);
+        });
 
         const authToken = localStorage.getItem("auth_token");
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/listings`, {
             method: "POST",
             headers: {
-                "Content-type": "application/json",
                 "Authorization": `Bearer ${authToken}`
             },
-            body: JSON.stringify({ 
-                listing: {
-                    type: parseInt(type),
-                    bedrooms: parseInt(bedrooms),
-                    bathrooms: parseInt(bathrooms),
-                    square_ft: parseFloat(sqft),
-                    description: description
-                },
-                address: {
-                    street: street,
-                    city: city,
-                    state: state
-                },
-                images: {
-                    main: coverImage,
-                    all: images
-                }
-            })
+            body: formData
         });
 
         if (response.ok) {
