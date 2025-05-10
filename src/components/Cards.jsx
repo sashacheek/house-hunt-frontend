@@ -23,18 +23,6 @@ function Cards() {
             { listings.map((listing) => (
                 <Card listing={listing} />
             ))}
-            {/* <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card /> */}
         </div>
     )
 }

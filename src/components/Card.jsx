@@ -1,7 +1,7 @@
-import placeholder from "../img/placeholder.svg"
+import { Link } from "react-router-dom";
 function Card({ listing }) {
     return (
-        <div className="card">
+        <Link className="card" to={`/listing/${listing.id}`}>
             <img src={listing.pictures[0].get_url}></img>
             <div className="content">
                 <p className="cost">$123,456</p>
@@ -12,7 +12,7 @@ function Card({ listing }) {
                 </div>
                 <p className="address">{listing.address.street + ", " + listing.address.city + ", " + listing.address.state_code + " " + listing.address.zip_code}</p>
             </div>
-        </div>
+        </Link>
     )
 }
 
