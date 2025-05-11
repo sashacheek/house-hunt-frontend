@@ -51,7 +51,7 @@ function Login() {
                             <input type="password" value={password} className="form-input" id="password" required onChange={(e) => setPassword(e.target.value)}></input>
                         </div>
                         {error && <p style={{ color: "red" }}>{error}</p>}
-                        <button type="submit" className="focus-button">LOGIN</button>
+                        <button type="submit" className="large-button focus-button">LOGIN</button>
                         <p>Need an account? <Link to="/signup">Sign Up</Link></p>
                     </form>
             </div>

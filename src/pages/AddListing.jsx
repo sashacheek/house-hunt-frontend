@@ -9,6 +9,7 @@ function AddListing() {
     const [street, setStreet] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
+    const [zipCode, setZipCode] = useState("");
     const [type, setType] = useState("")
     const [bedrooms, setBedrooms] = useState("");
     const [bathrooms, setBathrooms] = useState("");
@@ -71,6 +72,7 @@ function AddListing() {
         formData.append("address[street]", street);
         formData.append("address[city]", city);
         formData.append("address[state]", state);
+        formData.append("address[zip_code]", parseInt(zipCode));
 
         formData.append("images[main]", compressedCover);
         compressed.forEach((img, idx) => {
@@ -98,16 +100,16 @@ function AddListing() {
                 <div id="add-listing">
                 <form onSubmit={handleSubmit}>
                     <section className="address">
-                        <h2>Address</h2>
+                        <h2 className="form-header">Address</h2>
                         <div>
                             <input placeholder="Street" id="street" className="form-input" value={street} onChange={(e) => setStreet(e.target.value)}></input>
                             <input placeholder="City" id="city" className="form-input" value={city} onChange={(e) => setCity(e.target.value)}></input>
                             <input placeholder="ST" id="st" className="form-input" value={state} onChange={(e) => setState(e.target.value)}></input>
-                            <input placeholder="Zip Code" id="zip-code" className="form-input"></input>
+                            <input placeholder="Zip Code" id="zip-code" className="form-input" value={zipCode} onChange={(e) => setZipCode(e.target.value)}></input>
                         </div>
                     </section>
                     <section className="details">
-                        <h2>Details</h2>
+                        <h2 className="form-header">Details</h2>
                         <div>
                             <h3>Buy or Rent</h3>
                             <input type="radio" name="type" id="buy" value="0" onChange={(e) => setType(e.target.value)}></input>
@@ -145,7 +147,7 @@ function AddListing() {
                         </div>
                     </section>
                     <section className="pictures">
-                        <h2>Pictures</h2>
+                        <h2 className="form-header">Pictures</h2>
                         <h3>Cover image</h3>
                         <div className="preview-images">
                             <div className="preview-image add-image-button">
@@ -161,7 +163,7 @@ function AddListing() {
                         <PreviewImages images={displayImages} addImage={handleImagesChange} />
                     </section>
                     <section className="description">
-                        <h2>Description</h2>
+                        <h2 className="form-header">Description</h2>
                         <textarea onChange={(e) => setDescription(e.target.value)}></textarea>
                     </section>
                     <div className="buttons">

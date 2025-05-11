@@ -50,7 +50,7 @@ function SignUp() {
                             <input type="password" value={password} className="form-input" id="password" required onChange={(e) => setPassword(e.target.value)}></input>
                         </div>
                         {error && <p style={{ color: "red" }}>{error}</p>}
-                        <button type="submit" className="focus-button">SIGN UP</button>
+                        <button type="submit" className="large-button focus-button">SIGN UP</button>
                         <p>Already have an account? <Link to="/login">Log In</Link></p>
                     </form>
             </div>
