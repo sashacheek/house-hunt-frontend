@@ -279,7 +279,7 @@ footer p, footer a {
 }
 
 .cards {
-  margin: 20px;
+  margin: 40px 20px;
   column-count: 4;
   column-gap: 3vw;
 }
