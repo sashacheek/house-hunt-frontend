@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import TypeTag from "./TypeTag";
 
 function ListingBox({ listing }) {
     return (
@@ -12,6 +13,7 @@ function ListingBox({ listing }) {
                     <p>Sqft: {listing.square_ft}</p>
                 </div>
                 <p className="address">{listing.address.street + ", " + listing.address.city + ", " + listing.address.state_code + " " + listing.address.zip_code}</p>
+                <TypeTag type={listing.type_id} />
             </div>
         </Link>
     )

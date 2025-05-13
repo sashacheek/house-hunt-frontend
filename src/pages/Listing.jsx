@@ -1,9 +1,9 @@
-import Navigation from "../components/Navigation";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link } from "react-router-dom";
+import TypeTag from "../components/TypeTag";
 
 function Listing() {
     const { id } = useParams();
@@ -48,14 +48,14 @@ function Listing() {
                 </div>
             </div>
                 <p className="address">{address}</p>
+                <TypeTag type={listing.type_id} />
                 <h2>Description</h2>
-                <p>sfjksdhfldsjkfb</p>
-                <h2>Contact</h2>
+                <p className="listing-desc">{listing.description}</p>
+                <h2></h2>
+                {/* <h2>Contact</h2>
                 <div className="lister-info">
-                    {/* <p>Lister: SDjfksd Lhdkalf</p> */}
                     <p>Email: email@email.email</p>
-                    {/* <p>Phone: 111-222-3333</p> */}
-                </div>
+                </div> */}
             </div>
         </>
     )
