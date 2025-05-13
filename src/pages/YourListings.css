@@ -19,7 +19,7 @@
 }
 
 .listing {
-    height: 250px;
+    height: 275px;
     border-radius: 20px;
     /* padding: 30px; */
     display: flex;
@@ -133,9 +133,14 @@
 }
 
 @media screen and (max-width: 920px) {
+    .listing {
+        height: 250px;
+    }
+
     .listing h3 {
     font-size:54px;
     }
+    
     .listing .info p {
         font-size: 28px;
         font-weight: 300;
