@@ -2,10 +2,11 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 
 function Navigation() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const email = localStorage.getItem("email");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const email = localStorage.getItem("email");
 
   useEffect(() => {
+    console.log("aaa")
     const token = localStorage.getItem("auth_token");
     setIsLoggedIn(!!token);
   }, []);
@@ -17,10 +18,9 @@ function Navigation() {
 
     return (
         <nav id="navigation">
-        <Link to="/">HouseHunt</Link>
+        <Link to="/" id="main-title">HouseHunt</Link>
             <form>
                 <input placeholder="Enter City, State, or Zip Code"></input>
-                {/* <button type="submit">S</button> */}
             </form>
             <Link to="/">Home</Link>
 

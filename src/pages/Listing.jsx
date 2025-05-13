@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import placeholder from "../img/placeholder.svg"
+import { Link } from "react-router-dom";
 
 function Listing() {
     const { id } = useParams();
@@ -21,7 +21,7 @@ function Listing() {
 
     return (
         <>
-            <Navigation />
+            <Link className="return-link" to="/">&larr; go back</Link>
             <Carousel>
                 {listing.pictures.map((image) => (
                     <div className="carousel-img-container">
@@ -31,7 +31,7 @@ function Listing() {
             </Carousel>
             <div className="listing-info">
             <div className="listing-top">
-                <h3>$123,456</h3>
+                <h3>${parseInt(listing.price).toLocaleString()}</h3>
                 <div className="listing-top-right">
                     <div>
                         <h3 className="listing-top-right-heading">4</h3>

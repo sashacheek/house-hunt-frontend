@@ -1,6 +1,5 @@
 import '../App.css';
-import Navigation from '../components/Navigation'
-import Cards from "../components/Cards"
+import Cards from "../components/Cards";
 
 function Home() {
 
@@ -9,11 +8,10 @@ function Home() {
   return (
     <div className="App">
       <header className="App-header">
-        <Navigation />
         <div id="home-search">
             <div className="content">
                 <form>
-                    <input></input>
+                    <input placeholder="Enter City, State, or Zip Code"></input>
                 </form>
             </div>
         </div>

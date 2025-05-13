@@ -30,7 +30,7 @@ function Login() {
       localStorage.setItem("auth_token", data.auth_token);
       localStorage.setItem("email", data.email);
   
-      navigate("/");
+      window.location.href = "/";
     } catch (err) {
       setError("Invalid email or password");
     }
@@ -38,7 +38,6 @@ function Login() {
 
     return (
         <>
-            <Navigation />
             <div className="login-signup">
                     <form onSubmit={handleLogin}>
                         <h1>LOGIN</h1>

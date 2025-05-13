@@ -1,11 +1,15 @@
 import Navigation from "../components/Navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import imageCompression from "browser-image-compression"
 import PreviewImages from "../components/PreviewImages"
+import { useParams, Link, useNavigate } from "react-router-dom";
 import "./AddListing.css"
 
 
 function AddListing() {
+    const { id } = useParams();
+    const [listing, setListing] = useState();
+
     const [street, setStreet] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
@@ -14,6 +18,7 @@ function AddListing() {
     const [bedrooms, setBedrooms] = useState("");
     const [bathrooms, setBathrooms] = useState("");
     const [sqft, setSqft] = useState("");
+    const [price, setPrice] = useState("")
     const [description, setDescription] = useState("");
 
 
@@ -22,17 +27,64 @@ function AddListing() {
     const [coverImage, setCoverImage] = useState();
     const [displayCover, setDisplayCover] = useState();
 
+    const navigate = useNavigate();
+
+    // Edit Listing
+
+    useEffect(() => {
+        if (id) {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/listings/${id}`)
+        .then(res => res.json())
+        .then(data => setListing(data));
+        }
+    }, [id])
+
+    useEffect(() => {
+        if (listing) {
+            setData();
+        }
+    }, [listing])
+    
+
+    const setData = () => {
+        setStreet(listing.address.street);
+        setCity(listing.address.city);
+        setState(listing.address.state_code);
+        setZipCode(listing.address.zip_code);
+        setPrice(listing.price);
+        setType(listing.type_id);
+        setBathrooms(listing.bathrooms);
+        setBedrooms(listing.bedrooms);
+        setSqft(listing.square_ft);
+
+        var newImages = [];
+        listing.pictures.map((picture) => {
+            if (picture.main_img) {
+                setDisplayCover(picture.get_url);
+            }
+            else {
+                newImages.push(picture.get_url);
+            }
+        })
+        setDisplayImages(newImages);
+            
+
+
+        }
+
+    // Add Listing
+
     const handleImagesChange = (e) => {
-        var newImages = images.concat(Array.from(e.target.files));
+        let newImages = images.concat(Array.from(e.target.files));
         setImages(newImages);
-        var newDisplayImages = newImages.map((image) => URL.createObjectURL(image));
+        let newDisplayImages = newImages.map((image) => URL.createObjectURL(image));
         setDisplayImages(newDisplayImages);
     }
 
     const handleCoverChange = (e) => {
-        var newCoverImage = e.target.files[0];
+        let newCoverImage = e.target.files[0];
         setCoverImage(newCoverImage);
-        var newDisplayCover = URL.createObjectURL(newCoverImage);
+        let newDisplayCover = URL.createObjectURL(newCoverImage);
         setDisplayCover(newDisplayCover);
     }
 
@@ -55,9 +107,7 @@ function AddListing() {
         return compressedImages;
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
+    const getFormData = async () => {
         const compressed = await compressImages(images);
         const coverList = await compressImages([coverImage]);
         const compressedCover = coverList[0];
@@ -67,6 +117,7 @@ function AddListing() {
         formData.append("listing[bedrooms]", parseInt(bedrooms));
         formData.append("listing[bathrooms]", parseInt(bathrooms));
         formData.append("listing[square_ft]", parseFloat(sqft));
+        formData.append("listing[price]", parseInt(price));
         formData.append("listing[description]", description);
 
         formData.append("address[street]", street);
@@ -78,6 +129,33 @@ function AddListing() {
         compressed.forEach((img, idx) => {
             formData.append(`images[all][]`, img);
         });
+        return formData
+    }
+
+    const handleEditSubmit = async () => {
+        const formData = await getFormData();
+        formData.append("address[id]", parseInt(listing.address.id))
+
+        const authToken = localStorage.getItem("auth_token");
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/listings/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            },
+            body: formData
+        });
+
+        if (response.ok) {
+            alert("listing edited successfully");
+            navigate("/yourlistings");
+        } else {
+            alert("edit failed");
+        }
+    };
+
+    const handleAddSubmit = async () => {
+        // e.preventDefault();
+        const formData = await getFormData();
 
         const authToken = localStorage.getItem("auth_token");
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/listings`, {
@@ -89,16 +167,34 @@ function AddListing() {
         });
 
         if (response.ok) {
-            alert("listing added");
+            alert("listing added successfully");
+            navigate("/yourlistings");
         } else {
             alert("addition failed");
         }
     };
+
+    const handleDelete = async () => {
+        const authToken = localStorage.getItem("auth_token");
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/listings/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            }
+        });
+        if (response.ok) {
+            alert("listing deleted successfully");
+            navigate("/yourlistings");
+        } else {
+            alert("deletion failed");
+        }
+    };
+
     return (
         <>
-            <Navigation />
                 <div id="add-listing">
-                <form onSubmit={handleSubmit}>
+                <h1>{id ? "Edit Listing" : "New Listing"}</h1>
+                <form>
                     <section className="address">
                         <h2 className="form-header">Address</h2>
                         <div>
@@ -110,40 +206,44 @@ function AddListing() {
                     </section>
                     <section className="details">
                         <h2 className="form-header">Details</h2>
+                        <div className="small-input">
+                            <h3>Price</h3>
+                            <input className="form-input" value={price} onChange={(e) => setPrice(e.target.value)}></input>
+                        </div>
                         <div>
                             <h3>Buy or Rent</h3>
-                            <input type="radio" name="type" id="buy" value="0" onChange={(e) => setType(e.target.value)}></input>
+                            <input type="radio" name="type" id="buy" value="0" checked={type == "0" ? true : false} onChange={(e) => setType(e.target.value)}></input>
                             <label for="buy">Buy</label>
-                            <input type="radio" name="type" id="rent" value="1" onChange={(e) => setType(e.target.value)}></input>
+                            <input type="radio" name="type" id="rent" value="1" checked={type == "1" ? true : false} onChange={(e) => setType(e.target.value)}></input>
                             <label for="rent">Rent</label>
                             <h3>Bedrooms</h3>
-                            <input type="radio" name="beds" id="bd-1" value="1" onChange={(e) => setBedrooms(e.target.value)}></input>
+                            <input type="radio" name="beds" id="bd-1" value="1" checked={bedrooms == "1" ? true : false} onChange={(e) => setBedrooms(e.target.value)}></input>
                             <label for="bd-1">1</label>
-                            <input type="radio" name="beds" id="bd-2" value="2" onChange={(e) => setBedrooms(e.target.value)}></input>
+                            <input type="radio" name="beds" id="bd-2" value="2" checked={bedrooms == "2" ? true : false} onChange={(e) => setBedrooms(e.target.value)}></input>
                             <label for="bd-2">2</label>
-                            <input type="radio" name="beds" id="bd-3" value="3" onChange={(e) => setBedrooms(e.target.value)}></input>
+                            <input type="radio" name="beds" id="bd-3" value="3" checked={bedrooms == "3" ? true : false} onChange={(e) => setBedrooms(e.target.value)}></input>
                             <label for="bd-3">3</label>
-                            <input type="radio" name="beds" id="bd-4" value="4" onChange={(e) => setBedrooms(e.target.value)}></input>
+                            <input type="radio" name="beds" id="bd-4" value="4" checked={bedrooms == "4" ? true : false} onChange={(e) => setBedrooms(e.target.value)}></input>
                             <label for="bd-4">4</label>
-                            <input type="radio" name="beds" id="bd-5" value="5" onChange={(e) => setBedrooms(e.target.value)}></input>
+                            <input type="radio" name="beds" id="bd-5" value="5" checked={bedrooms == "5" ? true : false} onChange={(e) => setBedrooms(e.target.value)}></input>
                             <label for="bd-5">5+</label>
                         </div>
                         <div>
                             <h3>Bathrooms</h3>
-                            <input type="radio" name="baths" id="ba-1" value="1" onChange={(e) => setBathrooms(e.target.value)}></input>
+                            <input type="radio" name="baths" id="ba-1" value="1" checked={bathrooms == "1" ? true : false} onChange={(e) => setBathrooms(e.target.value)}></input>
                             <label for="ba-1">1</label>
-                            <input type="radio" name="baths" id="ba-2" value="2" onChange={(e) => setBathrooms(e.target.value)}></input>
+                            <input type="radio" name="baths" id="ba-2" value="2" checked={bathrooms == "2" ? true : false} onChange={(e) => setBathrooms(e.target.value)}></input>
                             <label for="ba-2">2</label>
-                            <input type="radio" name="baths" id="ba-3" value="3" onChange={(e) => setBathrooms(e.target.value)}></input>
+                            <input type="radio" name="baths" id="ba-3" value="3" checked={bathrooms == "3" ? true : false} onChange={(e) => setBathrooms(e.target.value)}></input>
                             <label for="ba-3">3</label>
-                            <input type="radio" name="baths" id="ba-4" value="4" onChange={(e) => setBathrooms(e.target.value)}></input>
+                            <input type="radio" name="baths" id="ba-4" value="4" checked={bathrooms == "4" ? true : false} onChange={(e) => setBathrooms(e.target.value)}></input>
                             <label for="ba-4">4</label>
-                            <input type="radio" name="baths" id="ba-5" value="5" onChange={(e) => setBathrooms(e.target.value)}></input>
+                            <input type="radio" name="baths" id="ba-5" value="5" checked={bathrooms == "5" ? true : false} onChange={(e) => setBathrooms(e.target.value)}></input>
                             <label for="ba-5">5+</label>
                         </div>
-                        <div className="sqft">
+                        <div className="small-input">
                             <h3>Square ft.</h3>
-                            <input className="form-input" onChange={(e) => setSqft(e.target.value)}></input>
+                            <input className="form-input" value={sqft} onChange={(e) => setSqft(e.target.value)}></input>
                         </div>
                     </section>
                     <section className="pictures">
@@ -167,9 +267,10 @@ function AddListing() {
                         <textarea onChange={(e) => setDescription(e.target.value)}></textarea>
                     </section>
                     <div className="buttons">
-                        <button className="warning-button large-button">DELETE</button>
-                        <button className="large-button">CANCEL</button>
-                        <button type="submit" className="focus-button large-button">SUBMIT</button>
+                        {id ? <button type="button" className="warning-button large-button" onClick={handleDelete}>DELETE</button> : <></>}
+                        <Link className="large-button" to="/yourlistings">CANCEL</Link>
+                        {id ? <button type="button" className="focus-button large-button" onClick={handleEditSubmit}>SUBMIT</button>
+                        : <button type="button" className="focus-button large-button" onClick={handleAddSubmit}>SUBMIT</button>}
                     </div>
                 </form>
             </div>

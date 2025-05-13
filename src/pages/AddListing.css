@@ -42,7 +42,6 @@ input[type="radio"] {
 }
 
 .add-image-button {
-    border: 1px solid rgb(0, 183, 140);
     border-radius: 10px;
     padding: 0px 20px 20px 20px;
     display: flex;
@@ -51,6 +50,13 @@ input[type="radio"] {
     justify-content: center;
     background-color: white;
     position: relative;
+    border-right: 2px solid lightgrey;
+    border-bottom: 2px solid lightgrey;
+    box-shadow: 0px 0px 20px lightgrey;
+}
+
+.add-image-button:hover {
+    box-shadow: 0px 0px 40px rgb(179, 179, 179);
 }
 
 .add-image-button input {
@@ -78,6 +84,7 @@ input[type="radio"] {
     font-weight: 400;
     margin-top: -40px;
     margin-bottom: -20px;
+    text-align: center;
 }
 
 @media screen and (max-width: 1440px) {

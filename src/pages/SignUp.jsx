@@ -37,7 +37,6 @@ function SignUp() {
 
     return (
         <>
-            <Navigation />
             <div className="login-signup">
                     <form onSubmit={handleSignUp}>
                         <h1>SIGN UP</h1>
