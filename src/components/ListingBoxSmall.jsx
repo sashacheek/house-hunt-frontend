@@ -3,7 +3,7 @@ import TypeTag from "./TypeTag";
 
 function ListingBox({ listing }) {
     return (
-        <Link to="/" className="listing-small listing-box">
+        <Link to={`/editlisting/${listing.id}`} className="listing-small listing-box">
             <img src={listing.pictures[0].get_url}></img>
             <div className="content">
                 <h3 className="cost">${parseInt(listing.price).toLocaleString()}</h3>

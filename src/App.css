@@ -12,6 +12,15 @@ h1 {
   margin-top: 10px;
 }
 
+#title {
+  font-size: 48px;
+}
+
+input[type="radio"] + label {
+  margin-right: 15px;
+}
+
+
 .large-button {
   display: inline;
   width: 100%;
@@ -141,7 +150,7 @@ label {
   z-index: 300;
   width: 300px;
   margin-left: -300px;
-  transition: margin 1s;
+  transition: margin 0.75s;
   display: flex;
   flex-direction: column;
   padding: 40px 20px;;
@@ -193,6 +202,10 @@ label {
 
   #nav-small, #hamburger-button {
     display: block;
+  }
+
+  h1 {
+    font-size: 36px;
   }
 }
 
@@ -266,7 +279,7 @@ footer p, footer a {
 }
 
 .cards {
-  margin: 40px;
+  margin: 20px;
   column-count: 4;
   column-gap: 3vw;
 }
@@ -448,6 +461,13 @@ footer p, footer a {
   width: 150px;
 }
 
+@media screen and (max-width: 430px) {
+  #add-listing .address #city {
+    flex: 1;
+    width: 100px;
+  }
+}
+
 /* listing pages */
 
 .carousel-img-container img {
@@ -469,7 +489,7 @@ footer p, footer a {
 }
 
 .return-link {
-  margin: 0 20px;
+  margin: 0 20px 10px;
   float: right;
 }
 

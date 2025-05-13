@@ -20,7 +20,7 @@ function Navigation() {
         <nav id="navigation">
         <Link to="/" id="main-title">HouseHunt</Link>
             <form>
-                <input placeholder="Enter City, State, or Zip Code"></input>
+                <input placeholder="This has not been implemented yet"></input>
             </form>
             <Link to="/">Home</Link>
 

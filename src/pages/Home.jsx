@@ -11,7 +11,7 @@ function Home() {
         <div id="home-search">
             <div className="content">
                 <form>
-                    <input placeholder="Enter City, State, or Zip Code"></input>
+                    <input placeholder="This has not been implemented yet"></input> {/*Enter City, State, or Zip Code*/}
                 </form>
             </div>
         </div>

@@ -201,14 +201,14 @@ function AddListing() {
                             <input placeholder="Street" id="street" className="form-input" value={street} onChange={(e) => setStreet(e.target.value)}></input>
                             <input placeholder="City" id="city" className="form-input" value={city} onChange={(e) => setCity(e.target.value)}></input>
                             <input placeholder="ST" id="st" className="form-input" value={state} onChange={(e) => setState(e.target.value)}></input>
-                            <input placeholder="Zip Code" id="zip-code" className="form-input" value={zipCode} onChange={(e) => setZipCode(e.target.value)}></input>
+                            <input type="number" placeholder="Zip Code" id="zip-code" className="form-input" value={zipCode} onChange={(e) => setZipCode(e.target.value)}></input>
                         </div>
                     </section>
                     <section className="details">
                         <h2 className="form-header">Details</h2>
                         <div className="small-input">
                             <h3>Price</h3>
-                            <input className="form-input" value={price} onChange={(e) => setPrice(e.target.value)}></input>
+                            <input type="number"className="form-input" value={price} onChange={(e) => setPrice(e.target.value)}></input>
                         </div>
                         <div>
                             <h3>Buy or Rent</h3>
@@ -243,7 +243,7 @@ function AddListing() {
                         </div>
                         <div className="small-input">
                             <h3>Square ft.</h3>
-                            <input className="form-input" value={sqft} onChange={(e) => setSqft(e.target.value)}></input>
+                            <input type="number" className="form-input" value={sqft} onChange={(e) => setSqft(e.target.value)}></input>
                         </div>
                     </section>
                     <section className="pictures">
